@@ -1,0 +1,17 @@
+/* Centers all text in the .center-text class */
+.center-text {
+    text-align: center;
+}
+
+/* Uses the arcade.jpg as the body background. Found tutorial on W3school.com */
+body {
+    background: url('../img/arcade.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Makes the jumbotron slimmer */
+.jumbotron {
+    padding: 2rem 2rem;
+}

@@ -1,5 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
+from .forms import NewReviewForm
+from .models import Review
+
 
 
 # When the '' url is entered into the browser this method is called.
@@ -12,4 +15,30 @@ def home(request):
 
 @login_required
 def make_review(request):
-    return render(request, 'webApp/makereview.html')
+    # If the request is a POST than take the information given from the user in the form
+    if request.method == 'POST':
+        # Creates a form instance and populate the data with what the user provided
+        form = NewReviewForm(request.POST)
+        # don't save the form yet until the user is verified
+        review = form.save(commit=False)
+        # Assign the user
+        review.user = request.user
+        # Save the form
+        if form.is_valid():
+            review.save()
+            # after the form is saved reload the make review page
+            return redirect('make_review')
+
+    # If the request is not a POST request than render a blank form
+    new_review_form = NewReviewForm()
+    # send the new review form as a variable that can be used in the makereview.html template
+    return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form})
+
+
+
+@login_required
+def all_reviews(request):
+    # Gets all Review objects from the database
+    reviews = Review.objects.all()
+    # Sends all review objects to be rendered on all_reviews.html
+    return render(request, 'webApp/all_reviews.html', {'reviews': reviews})    

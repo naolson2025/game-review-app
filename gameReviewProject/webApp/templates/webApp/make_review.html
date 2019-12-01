@@ -1,0 +1,29 @@
+{% extends 'webApp/home.html' %}
+{% comment %} Found cripsy forms tutorial https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html {% endcomment %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% comment %} Load the make review form with crispy bootstrap css {% endcomment %}
+<div class='container'>
+    <div class='row'>
+        <div class='col center-text container'>
+            <form method="POST" action="{% url 'make_review' %}">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-6">{{ new_review_form.game_name|as_crispy_field }}</div>
+
+                    <div class="col-6">{{ new_review_form.rating|as_crispy_field }}</div>
+                </div>
+
+                {{ new_review_form.game_summary|as_crispy_field }}
+                {{ new_review_form.notes|as_crispy_field }}
+                {{ new_review_form.photo }}
+                
+                <button id="add-new-review" type="submit" class="btn btn-success">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

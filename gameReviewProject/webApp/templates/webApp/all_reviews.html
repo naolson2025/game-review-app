@@ -1,0 +1,41 @@
+{% extends 'webApp/home.html' %}
+{% block content %}
+
+
+
+{% if reviews %}
+
+    {% for review in reviews %}
+        <div class="container">
+            <div class="row">
+                <div class="col-6"><h3>Game: {{ review.game_name }}</h3></div>
+                <div class="col-6"><h3>Rating: {{ review.rating }}</h3></div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">Game Summary: </div>
+                <div class="col-6">{{ review.game_summary }}</div>
+            </div>
+
+            <div class="row">
+                <div class='col-6'>Reviewer Notes: </div>
+                <div class='col-6'>{{ review.notes }}</div>
+            </div>
+
+            <div class='row'>
+                <div class='col'>{{ review.photo }}</div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="row">
+        <div class="col center-text">There are no reviews in the database.</div>
+    </div>
+
+{% endif %}
+
+
+
+{% endblock %}

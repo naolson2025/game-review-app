@@ -7,7 +7,7 @@
 <div class='container'>
     <div class='row'>
         <div class='col center-text container'>
-            <form method="POST" action="{% url 'make_review' %}">
+            <form method="POST" action="{% url 'make_review' %}" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="row">

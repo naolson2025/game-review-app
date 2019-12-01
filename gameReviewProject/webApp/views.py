@@ -14,11 +14,11 @@ def home(request):
 
 
 @login_required
-def make_review(request):
+def make_review(request):   
     # If the request is a POST than take the information given from the user in the form
     if request.method == 'POST':
         # Creates a form instance and populate the data with what the user provided
-        form = NewReviewForm(request.POST)
+        form = NewReviewForm(request.POST, request.FILES)
         # don't save the form yet until the user is verified
         review = form.save(commit=False)
         # Assign the user

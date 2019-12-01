@@ -18,8 +18,17 @@
             <div class='row align-items-center'>
                 <div class='col'><h1>Solid Video Game Reviews</h1></div>
                 <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'all_reviews' %}" role="button">All Reviews</a></div>
-                <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'home' %}" role="button">My Reviews</a></div>
+                <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'my_reviews' %}" role="button">My Reviews</a></div>
                 <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'make_review' %}" role="button">Make Reviews</a></div>
+                {% if user.is_authenticated %}
+                    {% comment %} TODO: change url so it goes to the user's profile when their name is clicked {% endcomment %}
+                    <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'my_reviews' %}" role="button">{{ user.username }}</a></div>
+                    {% comment %} TODO: add url for logout {% endcomment %}
+                    <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'logout' %}" role="button">Logout</a></div>
+                {% else %}
+                    <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'signup' %}" role="button">Sign Up</a></div>
+                    <div class='col-1'><a class="btn btn-outline-secondary" href="{% url 'login' %}" role="button">Login</a></div>
+                {% endif %}
             </div>
         </div>
 

@@ -1,0 +1,14 @@
+{% extends 'webApp/home.html' %}
+{% block content %}
+
+<div class='container'>
+    <form method='POST' action=''>
+        {% csrf_token %}
+        <table id='login_form'>
+            {{ form.as_table }}
+        </table>
+        <button type='submit'>Login</button>
+    </form>
+</div>
+
+{% endblock %}

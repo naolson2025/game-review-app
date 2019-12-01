@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from .forms import NewReviewForm
 from .models import Review
 
@@ -7,7 +9,6 @@ from .models import Review
 
 # When the '' url is entered into the browser this method is called.
 # This method will render the home.html template
-@login_required
 def home(request):
     return render(request, 'webApp/home.html')
 
@@ -41,4 +42,28 @@ def all_reviews(request):
     # Gets all Review objects from the database
     reviews = Review.objects.all()
     # Sends all review objects to be rendered on all_reviews.html
-    return render(request, 'webApp/all_reviews.html', {'reviews': reviews})    
+    return render(request, 'webApp/all_reviews.html', {'reviews': reviews})
+
+
+
+@login_required
+def my_reviews(request):
+    my_reviews = Review.objects.filter(user=request.user)
+    return render(request, 'webApp/my_reviews.html', {'my_reviews': my_reviews})
+
+
+
+# Found signup tutorial https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
+def signup(request):
+    if request.method == 'POST':
+        user_creation_form = UserCreationForm(request.POST)
+        if user_creation_form.is_valid():
+            user_creation_form.save()
+            username = user_creation_form.cleaned_data.get('username')
+            raw_password = user_creation_form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        user_creation_form = UserCreationForm()
+    return render(request, 'webApp/signup.html', {'user_creation_form': user_creation_form})

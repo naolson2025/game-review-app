@@ -13,3 +13,4 @@
 •	Search for reviews by genre
     o	Add genre
 •	Display reviews in alphabetical order
+•   Unit Tests!!!

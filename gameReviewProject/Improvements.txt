@@ -1,0 +1,15 @@
+•	Success message when a new review is added.
+•	API to bring in more reviews
+•	Link to YouTube reviews
+•	Ability to comment on another person’s review
+•	Ability to edit a post you’ve made
+•	Limit rating 1-10
+•	Changes notes to “Personal opinion of game” to make it clearer.
+•	Add note to make picture upload clearer.
+•	Reduce blank space on reviews
+•	After creating a review, it should automatically bring you to the review
+•	Password reset
+•	Search for reviews by name
+•	Search for reviews by genre
+    o	Add genre
+•	Display reviews in alphabetical order

@@ -37,7 +37,6 @@ def make_review(request):
 
 
 
-@login_required
 def all_reviews(request):
     # Gets all Review objects from the database
     reviews = Review.objects.all()

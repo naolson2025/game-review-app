@@ -3,6 +3,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% comment %} If the user enters a number outside of the rating range 1-10 this error message should appear {% endcomment %}
+
 {% comment %} Load the make review form with crispy bootstrap css {% endcomment %}
 <div class='container'>
     <div class='row'>
@@ -17,10 +19,14 @@
                 </div>
 
                 {{ new_review_form.game_summary|as_crispy_field }}
-                {{ new_review_form.notes|as_crispy_field }}
-                {{ new_review_form.photo }}
+                {{ new_review_form.reviewers_opinion|as_crispy_field }}
                 
-                <button id="add-new-review" type="submit" class="btn btn-success">Add</button>
+                <div class='row align-items-center'>
+                    <div class='col-4'>Add the game's cover photo!</div>
+                    <div class='col-4'>{{ new_review_form.photo }}</div>
+                    <div class='col-4'><button id="add-new-review" type="submit" class="btn btn-success">Add</button></div>
+                </div>
+
             </form>
         </div>
     </div>

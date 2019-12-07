@@ -19,16 +19,20 @@ def make_review(request):
     # If the request is a POST than take the information given from the user in the form
     if request.method == 'POST':
         # Creates a form instance and populate the data with what the user provided
-        form = NewReviewForm(request.POST, request.FILES)
+        new_review_form = NewReviewForm(request.POST, request.FILES)
         # don't save the form yet until the user is verified
-        review = form.save(commit=False)
+        #review = form.save(commit=False)
         # Assign the user
-        review.user = request.user
+        #review.user = request.user
         # Save the form
-        if form.is_valid():
+        if new_review_form.is_valid():
+            review = new_review_form.save(commit=False)
+            review.user = request.user
             review.save()
             # after the form is saved reload the make review page
-            return redirect('make_review')
+            return redirect('my_reviews')
+        else:
+            return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form})
 
     # If the request is not a POST request than render a blank form
     new_review_form = NewReviewForm()
@@ -39,7 +43,7 @@ def make_review(request):
 
 def all_reviews(request):
     # Gets all Review objects from the database
-    reviews = Review.objects.all()
+    reviews = Review.objects.all().order_by('game_name')
     # Sends all review objects to be rendered on all_reviews.html
     return render(request, 'webApp/all_reviews.html', {'reviews': reviews})
 

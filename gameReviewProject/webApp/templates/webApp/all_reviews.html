@@ -7,32 +7,30 @@
 
     {% for review in reviews %}
         <div class="container">
-            <div class="row">
-                <div class="col-6"><h3>Game: {{ review.game_name }}</h3></div>
-                <div class="col-6"><h3>Rating: {{ review.rating }}</h3></div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">Game Summary: </div>
-                <div class="col-6">{{ review.game_summary }}</div>
-            </div>
-
-            <div class="row">
-                <div class='col-6'>Reviewer Notes: </div>
-                <div class='col-6'>{{ review.notes }}</div>
-            </div>
-
             {% if review.photo %}
                 <div class='row'>
-                    <div class='col-6'>Cover Photo: </div>
                     <div class='col'><img class="photo-styling" src="{{ review.photo.url }}"></div>
                 </div>
             {% else %}
                 <div class='row'>
-                    <div class='col-6'>Cover Photo: </div>
                     <div class='col-6'>No photo available.</div>
                 </div>
             {% endif %}
+
+            <div class="row">
+                <div class="col-6 center-text"><h3>Game: {{ review.game_name }}</h3></div>
+                <div class="col-6 center-text"><h3>Rating: {{ review.rating }}</h3></div>
+            </div>
+
+            <div class="row">
+                <div class="col-6"><h5>Game Summary: </h5></div>
+                <div class='col-6'><h5>Personal Opinion: </h5></div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">{{ review.game_summary }}</div>
+                <div class='col-6'>{{ review.reviewers_opinion }}</div>
+            </div>
         </div>
     {% endfor %}
 

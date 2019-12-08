@@ -27,9 +27,42 @@
                     <div class='col-4'><button id="add-new-review" type="submit" class="btn btn-success">Add</button></div>
                 </div>
 
+                <div class='row align-items-center'>
+                    <div class='col-4 center-text'>{{ new_review_form.video_id|as_crispy_field }}</div>
+                </div>
+
             </form>
         </div>
     </div>
 </div>
+
+{% comment %} Make a form for searching Youtube videos {% endcomment %}
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <form method="POST" action="{% url 'search_video' %}">
+                {% csrf_token %}
+                {{ new_search_form|crispy }}
+                <button id="new-video-search" type="submit" class="btn btn-success">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% comment %} Found iframe on w3school.com {% endcomment %}
+{% comment %} For each video that is returned from the API video list put that video into a container {% endcomment %}
+{% if video_ids %}
+    {% for video_id in video_ids %}
+        <div class='container center-text'>
+            <p>{{ video_id }}</p>
+            <iframe align='middle' width='420' height='315' src="https://www.youtube.com/embed/{{ video_id }}"></iframe>
+        </div>
+    {% endfor %}
+{% else %}
+        <div class='container center-text'>
+            <p>No videos were returned</p>
+        </div>
+{% endif %}
+
 
 {% endblock %}

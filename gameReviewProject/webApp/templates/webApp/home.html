@@ -18,7 +18,7 @@
             <div class='row align-items-center'>
                 <div class='col'><h1>Solid Video Game Reviews</h1></div>
                 <div class='col-1 center-text'><a class="btn btn-outline-secondary" href="{% url 'all_reviews' %}" role="button">All Reviews</a></div>
-                <div class='col-1 center-text'><a class="btn btn-outline-secondary" href="{% url 'make_review' %}" role="button">Make Reviews</a></div>
+                <div class='col-1 center-text'><a class="btn btn-outline-secondary" href="{% url 'blank_new_review' %}" role="button">Make Reviews</a></div>
                 {% if user.is_authenticated %}
                     <div class='col-1 center-text'><a class="btn btn-outline-success" href="{% url 'my_reviews' %}" role="button">{{ user.username }}</a></div>
                     <div class='col-1 center-text'><a class="btn btn-outline-danger" href="{% url 'logout' %}" role="button">Logout</a></div>

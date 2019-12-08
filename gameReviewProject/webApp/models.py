@@ -10,7 +10,17 @@ class Review(models.Model):
     # Found validators on stack overflow
     rating = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(10), MinValueValidator(1)], null=False)
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    video_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         photo_str = self.photo.url if self.photo else 'no photo'
-        return f'{self.pk}: {self.game_name} {self.game_summary} {self.reviewers_opinion} {self.rating} {photo_str}'
+        return f'{self.pk}: {self.game_name} {self.game_summary} {self.reviewers_opinion} {self.rating} {self.photo_str} {self.video_id}'
+
+
+# This model is used to get the user's search and implement the search
+class Search(models.Model):
+    user = models.ForeignKey('auth.User', null=False, on_delete=models.CASCADE)
+    video_search = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return f'{self.video_search}'

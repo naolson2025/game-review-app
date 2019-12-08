@@ -21,6 +21,7 @@ class Review(models.Model):
 class Search(models.Model):
     user = models.ForeignKey('auth.User', null=False, on_delete=models.CASCADE)
     video_search = models.CharField(max_length=200, null=True)
+    created_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.video_search}'

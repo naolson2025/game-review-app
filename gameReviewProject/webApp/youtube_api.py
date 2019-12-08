@@ -7,7 +7,8 @@ from .models import Search
 
 def main():
     # Get the user's last search
-    user_search = Search.objects.latest('video_search')
+    user_search = Search.objects.latest('created_time')
+    print(user_search)
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"

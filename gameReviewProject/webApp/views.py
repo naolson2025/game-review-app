@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import NewReviewForm, NewSearchForm
-from .models import Review
+from .models import Review, Search
 from .youtube_api import main
 
 
@@ -62,14 +62,15 @@ def search_video(request):
     # This will always be POST as their are no buttons leading to this method without POST
     if request.method == 'POST':
         # Create a form instance for the new_review_form in order to save the user's data so they don't re-enter it
-        new_review_form = NewReviewForm(request.POST, request.FILES)
+        new_review_form = NewReviewForm()
         # Get the user's entry into the YouTube video search form
         new_search_form = NewSearchForm(request.POST)
-        
+        print(new_search_form)
         if new_search_form.is_valid():
             search = new_search_form.save(commit=False)
             search.user = request.user
             search.save()
+            print(Search.objects.all())
             video_ids = main()
             return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form, 'new_search_form': new_search_form, 'video_ids': video_ids})
         else:

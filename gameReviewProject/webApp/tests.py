@@ -1,3 +1,7 @@
 from django.test import TestCase
+from unittest.mock import patch, call
+import gameReviewProject.webApp.youtube_api
 
-# Create your tests here.
+class TestYouTubeAPI(TestCase):
+
+    @patch('')

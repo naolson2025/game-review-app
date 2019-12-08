@@ -1,10 +1,8 @@
 •	Success message when a new review is added.
 •	API to bring in more reviews
-•	Link to YouTube reviews
 •	Ability to comment on another person’s review
 •	Ability to edit a post you’ve made
 •	Reduce blank space on reviews
-•	Password reset
 •	Search for reviews by name
 •	Search for reviews by genre
     o	Add genre

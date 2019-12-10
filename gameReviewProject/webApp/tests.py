@@ -2,6 +2,8 @@ from django.test import TestCase
 from unittest.mock import patch, call
 from .youtube_api import clean_json
 import unittest
+from django.urls import reverse
+from .models import Review
 
 class TestYouTubeAPI(TestCase):
 
@@ -63,3 +65,96 @@ class TestYouTubeAPI(TestCase):
 if __name__ == '__main__':
     unittest.main()
 
+
+
+class TestMakeReviewPageIsEmpty(TestCase):
+
+    def test_make_review_page_is_empty(self):
+        # Call the url
+        response = self.client.get(reverse('blank_new_review'))
+        # Make sure the template is correct
+        self.assertTemplateUsed(response, 'webApp/make_review.html')
+        # Make sure that video_ids variable is False (The variable should not be set until user searches a video)
+        self.assertFalse(response.context['video_ids'])
+        # Make sure that the page displays "No videos were returned"
+        self.assertContains(response, 'No videos were returned')
+
+
+
+class TestAllReviews(TestCase):
+    # Created a json file that has a review in it
+    fixtures = ['test_reviews']
+
+    def test_contains_reviews(self):
+        # Call the all_reviews url
+        response = self.client.get(reverse('all_reviews'))
+        # Make sure the url renders the correct template
+        self.assertTemplateUsed(response, 'webApp/all_reviews.html')
+        # Check the info in the test_reviews.json file
+        self.assertContains(response, 'Super Wizard')
+        self.assertContains(response, 'picture')
+        self.assertContains(response, 'RPG')
+        self.assertContains(response, 'great game')
+        self.assertContains(response, '10')
+        self.assertContains(response, '1x2x3x4x5x6')
+        self.assertNotContains(response, 'Lame game')
+        self.assertNotContains(response, '5')
+
+
+
+class TestAllReviewsBlank(TestCase):
+
+    def test_all_reviews_defaults_to_blank(self):
+        response = self.client.get(reverse('all_reviews'))
+        self.assertTemplateUsed(response, 'webApp/all_reviews.html')
+        # Test that when the all_reviews.html page displays with no data the message below is shown
+        self.assertContains(response, 'There are no reviews in the database.')
+
+
+
+class TestMyReviews(TestCase):
+    # Created a json file that has a review in it
+    fixtures = ['test_reviews']
+
+    def test_contains_reviews(self):
+        # Call the my_reviews url
+        response = self.client.get(reverse('my_reviews'))
+        # Make sure the url renders the correct template
+        self.assertTemplateUsed(response, 'webApp/my_reviews.html')
+        # Check the info in the test_reviews.json file
+        self.assertContains(response, 'Super Wizard')
+        self.assertContains(response, 'picture')
+        self.assertContains(response, 'RPG')
+        self.assertContains(response, 'great game')
+        self.assertContains(response, '10')
+        self.assertNotContains(response, 'Lame game')
+        self.assertNotContains(response, '5')
+
+
+
+class TestMyReviewsBlank(TestCase):
+
+    def test_my_reviews_defaults_to_blank(self):
+        response = self.client.get(reverse('my_reviews'))
+        self.assertTemplateUsed(response, 'webApp/my_reviews.html')
+        # Test that when the all_reviews.html page displays with no data the message below is shown
+        self.assertContains(response, 'You have not made any reviews.')
+
+
+
+class TestAddNewReview(TestCase):
+
+    def test_add_new_review(self):
+        response = self.client.post(reverse('make_review'), \
+        {'game_name': 'Doom', 'game_summary': 'Defeat demons', 'reviewers_opinion': 'good game', 'rating': 10, 'photo': 'picture', 'video_id': '1x2x3x4x5x6'}, \
+        follow=True)
+        self.assertTemplateUsed(response, 'webApp/make_review.html')
+        response_reviews = response.context('reviews')
+        # There is one review in the POST above so the below should = 1
+        self.assertEqual(len(response_reviews), 1)
+        # The game name in the POST above is Doom
+        game_name = response_reviews[0]
+        # Test the game name is in the database
+        doom_in_database = Review.objects.get(name='Doom')
+        # make sure the game name matches the pull from the database
+        self.assertEqual(game_name, doom_in_database)

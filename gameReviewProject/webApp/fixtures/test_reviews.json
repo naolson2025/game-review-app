@@ -1,8 +1,13 @@
 [
     {
+        "model": "auth_user",
+        "id": 1
+    },
+    {
         "model": "webApp.review",
         "pk": 1,
         "fields":{
+            "user_id": 1,
             "game_name": "Super Wizard",
             "photo": "picture",
             "game_summary": "RPG",

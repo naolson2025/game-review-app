@@ -103,7 +103,7 @@ def signup(request):
             raw_password = user_creation_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('all_reviews')
     else:
         user_creation_form = UserCreationForm()
     return render(request, 'webApp/signup.html', {'user_creation_form': user_creation_form})

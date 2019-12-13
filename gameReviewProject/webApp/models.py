@@ -13,8 +13,8 @@ class Review(models.Model):
     video_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        photo_str = self.photo.url if self.photo else 'no photo'
-        return f'{self.pk}: {self.game_name} {self.game_summary} {self.reviewers_opinion} {self.rating} {self.photo_str} {self.video_id}'
+        photo_str = self.photo if self.photo else 'no photo'
+        return f'{self.pk}: {self.game_name} {self.game_summary} {self.reviewers_opinion} {self.rating} {photo_str} {self.video_id}'
 
 
 # This model is used to get the user's search and implement the search

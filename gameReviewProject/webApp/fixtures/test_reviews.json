@@ -1,9 +1,5 @@
 [
     {
-        "model": "auth_user",
-        "id": 1
-    },
-    {
         "model": "webApp.review",
         "pk": 1,
         "fields":{

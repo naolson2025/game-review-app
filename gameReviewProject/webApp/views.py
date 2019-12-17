@@ -74,7 +74,8 @@ def search_video(request):
             video_ids = main()
             return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form, 'new_search_form': new_search_form, 'video_ids': video_ids})
         else:
-            return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form, 'new_search_form': new_search_form})
+            video_ids = []
+            return render(request, 'webApp/make_review.html', {'new_review_form': new_review_form, 'new_search_form': new_search_form, 'video_ids': video_ids})
 
 
 

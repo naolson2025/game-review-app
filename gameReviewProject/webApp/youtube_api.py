@@ -45,8 +45,11 @@ def clean_json(youtube_json):
     video_id_list = []
     id = 0
     while id < 5:
-        video_id_list.append(youtube_json['items'][id]['id']['videoId'])
-        id += 1
+        try:
+            video_id_list.append(youtube_json['items'][id]['id']['videoId'])
+            id += 1
+        except:
+            break
 
     return video_id_list
 

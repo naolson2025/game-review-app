@@ -78,8 +78,6 @@ class TestMakeReviewPageIsEmpty(TestCase):
         response = self.client.get(reverse('blank_new_review'))
         # Make sure the template is correct
         self.assertTemplateUsed(response, 'webApp/make_review.html')
-        # Make sure that video_ids variable is False (The variable should not be set until user searches a video)
-        #self.assertFalse(response.context['video_ids'])
         # Make sure that the page displays "No videos were returned"
         self.assertContains(response, 'No videos were returned')
 
